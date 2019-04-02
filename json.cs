@@ -300,7 +300,7 @@ public class json : IEnumerable<json>
                 depth++;
                 foreach (var v in _array)
                 {
-                    for (var i = 0; i < depth; ++i) result += WHITESPACE[1];
+                    if (pretty) for (var i = 0; i < depth; ++i) result += WHITESPACE[1];
                     result += v.stringfy(depth, pretty);
                     result += ",";
                     if (pretty) result += WHITESPACE[2];
@@ -309,7 +309,7 @@ public class json : IEnumerable<json>
                 if (pretty) result = result.Remove(result.Length - 1, 1);
                 if (pretty) result += WHITESPACE[2];
                 depth--;
-                for (var i = 0; i < depth; ++i) result += WHITESPACE[1];
+                if (pretty) for (var i = 0; i < depth; ++i) result += WHITESPACE[1];
                 result += "]";
                 break;
             case type.dic:
@@ -318,7 +318,7 @@ public class json : IEnumerable<json>
                 depth++;
                 foreach (var kv in _dictionary)
                 {
-                    for (var i = 0; i < depth; ++i) result += WHITESPACE[1];
+                    if (pretty) for (var i = 0; i < depth; ++i) result += WHITESPACE[1];
                     result += string.Format("\"{0}\"", kv.Key);
                     result += ":";
                     if (pretty) result += WHITESPACE[0];
@@ -330,7 +330,7 @@ public class json : IEnumerable<json>
                 if (pretty) result = result.Remove(result.Length - 1, 1);
                 if (pretty) result += WHITESPACE[2];
                 depth--;
-                for (var i = 0; i < depth; ++i) result += WHITESPACE[1];
+                if (pretty) for (var i = 0; i < depth; ++i) result += WHITESPACE[1];
                 result += "}";
                 break;
         }
