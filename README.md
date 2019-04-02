@@ -3,7 +3,10 @@
 ```c#
 json jSample = json.create();
 jSample = 1234; // integer
-int i = jSample.get<int>(); // i is 1234
+int i = jSample.get<int>();
+double d = jSample.get<double>();
+float f = jSample.get<float>();
+string s = jSample.get<string>();
 ```
 
 ```c#
@@ -14,25 +17,37 @@ string s = jSample.get<string>(); // s is sample
 
 ```c#
 json jSample = json.create();
-jSample.add(1234);
-jSample.add("kkk");
-string s = jSample.dump();  // [1234, "asdf"]
-```
-
-```c#
-json jSample = json.create();
 jSample.add("jjj");
 jSample.add("kkk");
-foreach(var j in jSample)
+string s = jSample.dump();  // ["jjj", "asdf"]
+foreach (var jElm in jSample)
 {
-    Console.WriteLine(j.get<string>());
+ var s = jElm.get<string>();
+ Console.WriteLine(s);
 }
 // result is...
 // jjj
 // kkk
 ```
 
+```c#
+json jSample = json.create();
+jSample["apple"] = "red";
+jSample["banana"] = "yellow";
+jSample["json"] = 1234;
+string s = jSample.dump();
+```
 ```json
+// s is...
+{
+  "apple": "red",
+  "banana": "yellow",
+  "json": 1234
+}
+```
+
+```json
+// file parsing
 {
   "boolean": true,
   "integer": 1234,
@@ -61,5 +76,6 @@ foreach(var j in jSample)
 }
 ```
 ```
-json jSample = json.parse("text_file_name");
+json jSample = json.parse(...json_string...);
+string s = jSample.dump();
 ```
