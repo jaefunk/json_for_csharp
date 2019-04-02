@@ -103,6 +103,14 @@ public class json : IEnumerable<json>
     {
         return (Ty)Convert.ChangeType(_value, typeof(Ty));
     }
+
+    public bool is_contain(string key)
+    {
+        if (_type != type.dic)
+            return false;
+        return _dictionary.ContainsKey(key);
+    }
+    
     static public json create(type type = type.none, object value = null)
     {
         json _json = new global::json();
