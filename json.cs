@@ -1,20 +1,16 @@
 /*
 Json For CSharp v1.0.0
-
 https://github.com/jaefunk/json_for_csharp
 Copyright (c) 2019 jwkim <jaefunk@me.com>
 Licensed under the MIT License <http://opensource.org/licenses/MIT>
-
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
-
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
-
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -304,24 +300,41 @@ public class json : IEnumerable<json>
                 break;
             case type.arr:
                 result = "[";
+                if (pretty) result += WHITESPACE[2];
+                depth++;
                 foreach (var v in _array)
                 {
+                    for (var i = 0; i < depth; ++i) result += WHITESPACE[1];
                     result += v.stringfy(depth, pretty);
                     result += ",";
+                    if (pretty) result += WHITESPACE[2];
                 }
                 result = result.Remove(result.Length - 1, 1);
+                if (pretty) result = result.Remove(result.Length - 1, 1);
+                if (pretty) result += WHITESPACE[2];
+                depth--;
+                for (var i = 0; i < depth; ++i) result += WHITESPACE[1];
                 result += "]";
                 break;
             case type.dic:
                 result = "{";
+                if (pretty) result += WHITESPACE[2];
+                depth++;
                 foreach (var kv in _dictionary)
                 {
+                    for (var i = 0; i < depth; ++i) result += WHITESPACE[1];
                     result += string.Format("\"{0}\"", kv.Key);
                     result += ":";
+                    if (pretty) result += WHITESPACE[0];
                     result += kv.Value.stringfy(depth, pretty);
                     result += ",";
+                    if (pretty) result += WHITESPACE[2];
                 }
                 result = result.Remove(result.Length - 1, 1);
+                if (pretty) result = result.Remove(result.Length - 1, 1);
+                if (pretty) result += WHITESPACE[2];
+                depth--;
+                for (var i = 0; i < depth; ++i) result += WHITESPACE[1];
                 result += "}";
                 break;
         }
