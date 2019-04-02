@@ -52,18 +52,15 @@ public class json : IEnumerable<json>
         get { if (size() > index) return _array[index]; return null; }
         set { if (size() > index) _array[index] = value; }
     }
-    public json this[string key]
-    {
-        get
-        {
+    public json this[string key] {
+        get {
             if (_type != type.dic)
                 return null;
             if (_dictionary.ContainsKey(key) == false)
                 add(key, create());
             return _dictionary[key];
         }
-        set
-        {
+        set {
             if (_type != type.dic)
                 return;
             if (_dictionary.ContainsKey(key) == false)
@@ -111,9 +108,9 @@ public class json : IEnumerable<json>
         json _json = new global::json();
         _json._type = type;
         if (type == type.arr)
-            _json._array = (List<json>)value;
+            _json._array = value != null ? (List<json>)value : new List<json>();
         else if (type == type.dic)
-            _json._dictionary = (Dictionary<string, json>)value;
+            _json._dictionary = value != null ? (Dictionary<string, json>)value : new Dictionary<string, json>();
         else
             _json._value = value;
         return _json;
@@ -164,10 +161,9 @@ public class json : IEnumerable<json>
     {
         if (_type != type.dic)
         {
-            if (_type == type.none)
-                _type = type.dic;
-            else
+            if (_type != type.none)
                 return;
+            _type = type.dic;
         }
         if (_dictionary == null)
             _dictionary = new Dictionary<string, json>();
