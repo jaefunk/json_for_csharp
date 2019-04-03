@@ -75,7 +75,7 @@ string s = jSample.dump();
   }
 }
 ```
-```
+```c#
 json jSample = json.parse(...json_string...);
 string s = jSample.dump();
 ```
