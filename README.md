@@ -3,55 +3,69 @@
 basic use
 ```c#
 json jSample = json.create();
-
 jSample = "sample";
-string s = jSample.get<string>();   // "sample"
-
+string s = jSample.get<string>();   // sample
 jSample = 1234;
 int i = jSample.get<int>();         // 1234
 double d = jSample.get<double>();   // 1234.0
 float f = jSample.get<float>();     // 1234.0
 string s = jSample.get<string>();   // 1234(string)
 ```
-
-dump and parse
+use dictionary
 ```c#
-json jSample1 = json.create();
-jSample1["apple"] = "red";
-jSample1["integer"] = 1234;
-
-string s = jSample1["apple"].get<string>();  // "red"
-int i = jSample1["integer"].get<int>();      // 1234
-
-string dump1 = jSample1.dump();  
+json jSample = json.create();
+jSample.add("integer", 1234);
+jSample.add("string", "aaa");
+int i = jSample["integer"].get<int>();      // 1234
+string s = jSample["string"].get<string>(); // red
+```
+use array
+```c#
+json jSample = json.create();
+jSample.add(1);
+jSample.add(2);
+jSample.add(3);
+for (int i = 0; i < jSample.size(); ++i) {
+    int integer = jSample[i].get<int>();
+    Console.WriteLine(integer);
+}
+// 1 
+// 2
+// 3
+```
+use enumerator
+```c#
+foreach (var jObject in jSample) {
+    var s = jObject.get<int>();
+    Console.WriteLine(int);
+}
+// 1 
+// 2
+// 3
+```
+dump
+```c#
+json jSample = json.create();
+int i = jSample["integer"].get<int>();      // 1234
+string s = jSample["string"].get<string>(); // red
+string dump = jSample.dump();  
 /*
-{"apple":"red","integer":1234}
+{"integer":1234,"apple":"red"}
 */
-string dump2 = jSample1.dump(true);
+dump = jSample.dump(true);
 /*
 {
-    "apple": "red",
-    "integer": 1234
+    "integer": 1234,
+    "apple": "red"
 }
 */
 ```
+parse
 ```c#
-json jSample2 = json.parse(dump1);
-string s = jSample2["apple"].get<string>();  // "red"
-int i = jSample2["integer"].get<int>();      // 1234
+json jSample = json.parse(dump);
+string s = jSample["string"].get<string>();  // red
+int i = jSample["integer"].get<int>();       // 1234
 ```
-
-enumerator
-```c#
-foreach (var jObject in jSample)
-{
-    var s = jObject.get<string>();
-    Console.WriteLine(s);
-}
-// red
-// 1234(string)
-```
-
 my test json data
 ```json
 {
