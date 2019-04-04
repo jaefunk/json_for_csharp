@@ -1,53 +1,59 @@
 # Json For Csharp
  
+basic use
 ```c#
 json jSample = json.create();
-jSample = 1234; // integer
-int i = jSample.get<int>();
-double d = jSample.get<double>();
-float f = jSample.get<float>();
-string s = jSample.get<string>();
+
+jSample = "sample";
+string s = jSample.get<string>();   // "sample"
+
+jSample = 1234;
+int i = jSample.get<int>();         // 1234
+double d = jSample.get<double>();   // 1234.0
+float f = jSample.get<float>();     // 1234.0
+string s = jSample.get<string>();   // 1234(string)
 ```
 
+dump and parse
 ```c#
-json jSample = json.create();
-jSample = "sample"; // string
-string s = jSample.get<string>(); // s is sample
-```
+json jSample1 = json.create();
+jSample1["apple"] = "red";
+jSample1["integer"] = 1234;
 
-```c#
-json jSample = json.create();
-jSample.add("jjj");
-jSample.add("kkk");
-string s = jSample.dump();  // ["jjj", "asdf"]
-foreach (var jElm in jSample)
+string s = jSample1["apple"].get<string>();  // "red"
+int i = jSample1["integer"].get<int>();      // 1234
+
+string dump1 = jSample1.dump();  
+/*
+{"apple":"red","integer":1234}
+*/
+string dump2 = jSample1.dump(true);
+/*
 {
- var s = jElm.get<string>();
- Console.WriteLine(s);
+    "apple": "red",
+    "integer": 1234
 }
-// result is...
-// jjj
-// kkk
+*/
 ```
-
 ```c#
-json jSample = json.create();
-jSample["apple"] = "red";
-jSample["banana"] = "yellow";
-jSample["json"] = 1234;
-string s = jSample.dump();
-```
-```json
-// s is...
-{
-  "apple": "red",
-  "banana": "yellow",
-  "json": 1234
-}
+json jSample2 = json.parse(dump1);
+string s = jSample2["apple"].get<string>();  // "red"
+int i = jSample2["integer"].get<int>();      // 1234
 ```
 
+enumerator
+```c#
+foreach (var jObject in jSample)
+{
+    var s = jObject.get<string>();
+    Console.WriteLine(s);
+}
+// red
+// 1234(string)
+```
+
+my test json data
 ```json
-// file parsing
 {
   "boolean": true,
   "integer": 1234,
@@ -68,14 +74,10 @@ string s = jSample.dump();
         "color": "yellow"
       },
       {
-        "fruit": "cat",
-        "color": "cute"
+        "fruit": "apple",
+        "color": "red"
       }
     ]
   }
 }
-```
-```c#
-json jSample = json.parse(...json_string...);
-string s = jSample.dump();
 ```
