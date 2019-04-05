@@ -46,13 +46,13 @@ foreach (var jObject in jSample) {
 dump
 ```c#
 json jSample = json.create();
-int i = jSample["integer"].get<int>();      // 1234
-string s = jSample["string"].get<string>(); // red
+jSample["integer"] = 1234;
+jSample["string"] = "red";
 string dump = jSample.dump();  
 /*
 {"integer":1234,"apple":"red"}
 */
-dump = jSample.dump(true);
+dump = jSample.dump(true); // for pretty
 /*
 {
     "integer": 1234,
