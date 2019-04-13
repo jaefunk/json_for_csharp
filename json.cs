@@ -52,15 +52,18 @@ public class json : IEnumerable<json>
         get { if (size() > index) return _array[index]; return null; }
         set { if (size() > index) _array[index] = value; }
     }
-    public json this[string key] {
-        get {
+    public json this[string key]
+    {
+        get
+        {
             if (_type != type.dic)
                 return null;
             if (_dictionary.ContainsKey(key) == false)
                 add(key, create());
             return _dictionary[key];
         }
-        set {
+        set
+        {
             if (_type != type.dic)
                 return;
             if (_dictionary.ContainsKey(key) == false)
@@ -74,6 +77,10 @@ public class json : IEnumerable<json>
         return create(type.boolean, value);
     }
     public static implicit operator json(int value)
+    {
+        return create(type.number, value);
+    }
+    public static implicit operator json(long value)
     {
         return create(type.number, value);
     }
@@ -110,7 +117,7 @@ public class json : IEnumerable<json>
             return false;
         return _dictionary.ContainsKey(key);
     }
-    
+
     static public json create(type type = type.none, object value = null)
     {
         json _json = new global::json();
