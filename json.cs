@@ -1,5 +1,5 @@
 /*
-Json For CSharp v1.0.0
+Json For CSharp v1.1.0
 https://github.com/jaefunk/json_for_csharp
 Copyright (c) 2019 jwkim <jaefunk@me.com>
 Licensed under the MIT License <http://opensource.org/licenses/MIT>
